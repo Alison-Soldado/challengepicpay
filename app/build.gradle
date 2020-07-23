@@ -1,0 +1,118 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        applicationId "com.example.challengepicpay"
+        multiDexEnabled true
+        minSdkVersion 23
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "com.example.challengepicpay.ContactsRunner"
+        testInstrumentationRunnerArguments clearPackageData: 'true'
+    }
+
+    def baseUrl = '"http://careers.picpay.com/tests/mobdev/"'
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            buildConfigField 'String', 'BASE_URL', baseUrl
+        }
+        release {
+            minifyEnabled true
+            buildConfigField 'String', 'BASE_URL', baseUrl
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    testOptions {
+        unitTests.all {
+            useJUnitPlatform()
+        }
+    }
+
+    sourceSets {
+        main {
+            assets.srcDirs = ['src/androidTest/assets']
+        }
+    }
+
+    testOptions {
+        execution 'ANDROIDX_TEST_ORCHESTRATOR'
+    }
+
+    androidExtensions {
+        experimental = true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    packagingOptions {
+        exclude 'META-INF/atomicfu.kotlin_module'
+    }
+}
+
+
+def appCompatVersion = '1.1.0'
+def coroutinesVersion = '1.3.3'
+def koinVersion = '2.0.1'
+def okHttpVersion = '3.12.3'
+def espressoVersion = '3.2.0'
+def testVersion = '1.2.0'
+def kotlinTestVersion = '3.4.0'
+def circleimageviewVersion = '3.0.0'
+def picassoVersion = '2.71828'
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "androidx.appcompat:appcompat:$appCompatVersion"
+    implementation "com.google.android.material:material:$appCompatVersion"
+    implementation 'androidx.core:core-ktx:1.5.0-alpha01'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
+    implementation 'com.squareup.retrofit2:retrofit:2.7.1'
+    implementation 'com.squareup.retrofit2:converter-gson:2.7.1'
+    implementation "org.koin:koin-androidx-scope:$koinVersion"
+    implementation "org.koin:koin-androidx-viewmodel:$koinVersion"
+    implementation "com.squareup.okhttp3:okhttp:$okHttpVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
+    implementation 'com.android.support:multidex:1.0.3'
+    implementation "com.squareup.picasso:picasso:$picassoVersion"
+    implementation "de.hdodenhof:circleimageview:$circleimageviewVersion"
+
+    androidTestUtil "androidx.test:orchestrator:$testVersion"
+
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.hamcrest:hamcrest-library:1.3'
+    testImplementation 'org.mockito:mockito-core:3.2.4'
+    testImplementation "org.koin:koin-test:$koinVersion"
+    testImplementation "io.kotlintest:kotlintest-runner-junit5:$kotlinTestVersion"
+    testImplementation "io.kotlintest:kotlintest-extensions-koin:$kotlinTestVersion"
+    testImplementation 'com.nhaarman:mockito-kotlin:1.5.0'
+    testImplementation 'android.arch.core:core-testing:1.1.1'
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.3'
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
+
+    androidTestImplementation "androidx.test:rules:$testVersion"
+    androidTestImplementation "androidx.test:runner:$testVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
+    androidTestImplementation "com.squareup.okhttp3:mockwebserver:$okHttpVersion"
+    androidTestImplementation ('io.mockk:mockk-android:1.9.3') { exclude module: 'objenesis' }
+    androidTestImplementation 'org.objenesis:objenesis:2.6'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation "androidx.test.espresso:espresso-intents:$espressoVersion"
+    androidTestImplementation "org.koin:koin-test:$koinVersion"
+
+}
