@@ -2,14 +2,13 @@ package com.example.challengepicpay.presentation.customview
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import com.example.challengepicpay.R
 import com.example.challengepicpay.presentation.extension.bindView
+import com.example.challengepicpay.presentation.extension.visibilityLoading
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
@@ -53,10 +52,6 @@ class ContactView @JvmOverloads constructor(
     }
 
     fun setVisibilityLoading(isLoading: Boolean) {
-        if (isLoading) {
-            progressBarLoading.visibility = View.VISIBLE
-        } else {
-            progressBarLoading.visibility = View.GONE
-        }
+        progressBarLoading.visibilityLoading(isLoading)
     }
 }
